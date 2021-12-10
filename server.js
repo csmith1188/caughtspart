@@ -9,13 +9,14 @@ const sqlite3 = require('sqlite3');
 var db = new sqlite3.Database('login.db');
 
 
+
 const hostname = '127.0.0.1'
 const port = 1337;
 
 
 var app = express();
 app.use(session({
-  secret: 'secret',
+  secret: 'secret',     
   resave: true,
   saveUninitialized: true
 }));
@@ -27,7 +28,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')))
 app.get('/', function(request, response) {
-  response.sendFile(path.join(__dirname + '/index.html'));
+  response.sendFile(path.join(__dirname + 'index.html'));
 });
 
 
