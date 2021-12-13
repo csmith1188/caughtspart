@@ -24,11 +24,17 @@ app.get("/teacher", function(req, res) {
   })
 })
 
-app.get("/student", function(req, res) {
-  res.render("student.ejs", {
-
-  })
-})
+app.get('/student', function(req, res) { //this is completly worthless and will be killed as soon as the database is created
+  res.render('student.ejs', {//you will need to be reidrected here if you are a student from /
+    Name: 'Trey2023008',
+    Professionalism: "lmao gay",
+    Empathy: 'deez nuts',
+    Innovation: 'hah gotem',
+    Optimism: 'why you always lyin',
+    Integrity: 'ohhhhh my god',
+    Perseverance: 'what the dog doin'
+  });
+});
 
 app.post('/access', function(req, res) {
   res.render('access.ejs', {

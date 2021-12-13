@@ -5,14 +5,14 @@
     <title></title>
   </head>
   <body class="container">
-  <center><h1>Hello, [student name&id here]</center>
+  <center><h1>Hello, <%= Name %></center>
   <main>
     <div class="jumbotron"> <!---Page is borked, EJS is running the variables from within the comments, which is an oxymoron.-->
-      <h2>Professionalism - </h2> <!-- <%= name %> -->
-      <h2>Empathy - </h2> <!---<%= name %>--->
-      <h2>Innovation - </h2> <!---<%= name %>--->
-      <h2>Optimism - </h2> <!---<%= name %>--->
-      <h2>Integrity - </h2> <!---<%= name %>--->
-      <h2>Perseverance - </h2> <!---<%= name %>--->
+      <h2>Professionalism - <%= Professionalism %></h2>
+      <h2>Empathy - <%= Empathy  %></h2>
+      <h2>Innovation - <%= Innovation  %></h2>
+      <h2>Optimism - <%= Optimism  %></h2>
+      <h2>Integrity - <%= Integrity  %></h2>
+      <h2>Perseverance - <%= Perseverance  %></h2>
   </body>
 </html>
