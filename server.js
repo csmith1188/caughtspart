@@ -6,7 +6,7 @@ const port = 1337;
 
 
 app.set('view engine', 'ejs');
-
+app.static('/static', 'style.css')
 
 app.get('/', function(req, res) { //view and edit scores
   res.render('index.ejs', { //depending on perms ^
@@ -30,6 +30,10 @@ app.get("/student", function(req, res) {
   })
 })
 
+
+app.get('/finished', function(req,res){
+  res.render('thx.ejs', )
+})
 app.post('/access', function(req, res) {
   res.render('access.ejs', {
   });
@@ -37,5 +41,5 @@ app.post('/access', function(req, res) {
 
 
 app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+  console.log(`Server running at port: ${port}`);
 });

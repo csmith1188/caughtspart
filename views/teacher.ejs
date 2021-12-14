@@ -2,23 +2,46 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Teacher Page</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <center><h1>epic teachers page!!!!!</h1>
-    <input type="text" name="name" placeholder="Student ID here" value="">
-    <table>
-   <tr>
-      <th>Professionalism</th><th>Empathy</th><th>Innovation</th><th>Optimism</th><th>Integrity</th><th>Perseverance</th>
-   </tr>
-   <tr>
-      <td><button>+5</button></td><td><button>+5</button></td><td><button>+5</button></td><td><button>+5</button></td><td><button>+5</button></td><td><button>+5</button></td>
-   <tr>
-      <td><button>+10</button></td><td><button>+10</button></td><td><button>+10</button></td><td><button>+10</button></td><td><button>+10</button></td><td><button>+10</button></td>
-   </tr>
-   <tr>
-      <td><button>+20</button></td><td><button>+20</button></td><td><button>+20</button></td><td><button>+20</button></td><td><button>+20</button></td><td><button>+20</button></td>
-   </tr>
-</table>
-  </body>
+<form class="" action="thx.ejs" method="post" >
+  <center>
+    <h1>Points Page</h1>
+  <input type="text" name="" placeholder="Student ID">
+  <br><br>
+  <input type="submit" name="" value="Submit">
+  <br><br>
+  <input type="button" name="" value="Add Points">
+  <br><br>
+  <input type="button" name="" value="Remove Points">
+</center>
+
+</form>
+
+
+<script type="text/javascript">
+// profesionalism
+//empathy
+//innovation
+//optimism
+//integrity
+//perseverance
+
+student={
+  points:0
+}
+
+function addPoints(){
+  student.points += 5
+  alert(`Student Points: ${student.points}`)
+}
+function removePoints(){
+  student.points -= 5
+  alert(`Student Points: ${student.points}`)
+}
+
+
+</script>
 </html>
