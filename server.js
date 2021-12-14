@@ -1,7 +1,11 @@
 const express = require('express');
 const readline = require('readline');
+const fs = require('fs');
+const path = require('path');
 app = express()
 const hostname = '127.0.0.1'
+const ejs = require('ejs');
+app.use(express.urlencoded({ extended: true}));
 const port = 1337;
 
 
