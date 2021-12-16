@@ -4,10 +4,33 @@ var bodyParser = require('body-parser');
 var path = require('path');
 const http = require('http');
 var fs = require('fs')
-const sqlite3 = require('sqlite3');
+const sqlite3 = require('sqlite3').verbose();
 
-var db = new sqlite3.Database('login.db');
+var db = new sqlite3.Database('login.db', sqlite3.OPEN_READWRITE, (err) => {
+  if (err) return console.error(err.message);
 
+  console.log('connection successful!');
+});
+//
+// db.run(
+//   `CREATE TABLE users(username, password, email, id)`
+// );
+//
+// const sql = `INSERT INTO users(username, password, email, id)
+//                 VALUES(?,?,?,?)`;
+
+
+// db.run(
+//   sql,
+//   ['test','test','test@gmail.com', 1],
+//   (err) => {
+//   if (err) return console.error(err.message);
+//   console.log('new row created');
+// });
+//
+// db.close((err) => {
+//   if (err) return console.error(err.message);
+// });
 
 
 const hostname = '127.0.0.1'
@@ -16,7 +39,7 @@ const port = 1337;
 
 var app = express();
 app.use(session({
-  secret: 'secret',     
+  secret: 'secret',
   resave: true,
   saveUninitialized: true
 }));
@@ -34,13 +57,13 @@ app.get('/', function(request, response) {
 
 
 app.post('/auth', function(request, response) {
-  var username = request.body.username;
-  var password = request.body.password;
+  var username = request.body.uname;
+  var password = request.body.pass;
   if (username && password) {
-    db.get(`SELECT * FROM accounts WHERE username = '${username}' AND password = '${password}';`, function(error, results) {
+    db.get(`SELECT * FROM users WHERE users = '${username}' AND password = '${password}';`, function(error, results) {
       if (results) {
-        request.session.loggedin = true;
         request.session.username = username;
+        request.session.loggedin = true;
         console.log('Logged in');
         response.redirect('/home');
       } else {
