@@ -1,103 +1,93 @@
-const express = require('express');
-const readline = require('readline');
-const fs = require('fs');
-const path = require('path');
-app = express()
+
+var express = require('express');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var path = require('path');
+const http = require('http');
+var fs = require('fs')
+const sqlite3 = require('sqlite3').verbose();
+
+var db = new sqlite3.Database('login.db', sqlite3.OPEN_READWRITE, (err) => {
+  if (err) return console.error(err.message);
+
+  console.log('connection successful!');
+});
+//
+// db.run(
+//   `CREATE TABLE users(username, password, email, id)`
+// );
+//
+// const sql = `INSERT INTO users(username, password, email, id)
+//                 VALUES(?,?,?,?)`;
+
+
+// db.run(
+//   sql,
+//   ['test','test','test@gmail.com', 1],
+//   (err) => {
+//   if (err) return console.error(err.message);
+//   console.log('new row created');
+// });
+//
+// db.close((err) => {
+//   if (err) return console.error(err.message);
+// });
+
+
 const hostname = '127.0.0.1'
-const ejs = require('ejs');
-app.use(express.urlencoded({ extended: true}));
 const port = 1337;
 
 
-app.set('view engine', 'ejs');
+var app = express();
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 
-
-
-
-app.get('/', function(req, res) { //view and edit scores
-  // let rawinfo = fs.readFileSync(__dirname + "/userinfo.json")
-  // let feed = JSON.parse(rawinfo)
-  // let text = feed.text
-  res.render('index.ejs');
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'static')))
+app.get('/', function(request, response) {
+  response.sendFile(path.join(__dirname + 'index.html'));
 });
 
 
-app.post('/login', function(req, res) {
-  let login = {
-    name: req.body.uname,
-    password: req.body.pass
+
+app.post('/auth', function(request, response) {
+  var username = request.body.uname;
+  var password = request.body.pass;
+  if (username && password) {
+    db.get(`SELECT * FROM users WHERE users = '${username}' AND password = '${password}';`, function(error, results) {
+      if (results) {
+        request.session.username = username;
+        request.session.loggedin = true;
+        console.log('Logged in');
+        response.redirect('/home');
+      } else {
+        response.send('Incorrect Username and/or Password!');
+      }
+      response.end();
+    });
+  } else {
+    response.send('Please enter Username and Password!');
+    response.end();
   }
-  console.log(login)
+});
 
-  if (login.name && login.password) {
-      let rawinfo = fs.readFileSync(__dirname + '/userinfo.json')
-      let feed = JSON.parse(rawinfo)
-      feed.comments.push(login);
-      console.log(feed);
-      fs.writeFile(__dirname + '/userinfo.json', JSON.stringify(feed), 'utf8', function() {
-        console.log('wrote to file')
-        res.render('index.ejs');
 
-      })
+app.get('/home', function(request, response) {
+  if (request.session.loggedin) {
+    response.sendFile('index.html')
+  } else {
+    response.send('Please login to view this page!');
   }
-})
-
-//
-//
-//
-//
-//
-//
-//
-// app.get('/access', function(req, res) {
-//   res.render('access.ejs', {//list of users and their scores, also used for adding and removing students
-//   });
-// });
-//
- app.get("/teacher", function(req, res) {
-   res.render("teacher.ejs", {
-     // addamt: {},
-     // subamt: {},
-     // starteramt: 100
-   })
- })
-
-
- app.post('/access', function(req, res) {
-   res.render('access.ejs', {
-   });
- });
-
- app.get('/addStudent?', function (req, res){
-   res.render('addStudent', {
-   })
- })
-
- app.post('/addStudent', function (req, res) {
-     var studentInfo = {
-       studentID: req.body.studentID,
-       points: req.body.points
-     }
-     console.log(studentInfo)
-
-     if (studentInfo.studentID) {
-         let rawdata = fs.readFileSync(__dirname + '/studentInfo.json')
-         let parse = JSON.parse(rawdata)
-         parse.students.push(studentInfo);
-         console.log(parse);
-         fs.writeFile(__dirname + '/studentInfo.json', JSON.stringify(parse), 'utf8', function() {
-           console.log('student ID written with points')
-           res.render('addStudent.ejs');
-
-         })
-
-     }
-   })
-
-
-
+});
 
 app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+  console.log('lol')
+
 });
