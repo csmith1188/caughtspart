@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <title></title>
   </head>
-  <body>
-    <center><h1>epic students page!!!!!</h1>
-    <table>
-   <tr>
-      <th>Professionalism</th><th>Empathy</th><th>Innovation</th><th>Optimism</th><th>Integrity</th><th>Perseverance</th>
-   </tr>
-   <tr>
-      <td>yourpoints</td><td>yourpoints</td><td>yourpoints</td><td>yourpoints</td><td>yourpoints</td><td>yourpoints</td>
-   <tr>
-   </tr>
+  <body class="container">
+  <center><h1>Hello, <%= Name %></center>
+  <main>
+    <div class="jumbotron"> <!---Page is borked, EJS is running the variables from within the comments, which is an oxymoron.-->
+      <h2>Professionalism - <%= points[i].professionalism %></h2>
+      <h2>Empathy - <%= points[i].empathy %></h2>
+      <h2>Innovation - <%= points[i].innovation %></h2>
+      <h2>Optimism - <%= points[i].optimism %></h2>
+      <h2>Integrity - <%= points[i].integrity %></h2>
+      <h2>Perseverance - <%= points[i].perseverance %></h2>
   </body>
 </html>
